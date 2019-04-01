@@ -50,8 +50,15 @@ app.post("/", function(req, res){
     request(options, function(err, response, body){
       if(err){
         console.log(err);
+        res.sendFile(__dirname + "/failure.html");
       } else {
         console.log(response.statusCode);
+      }
+
+      if(response.statusCode == 200) {
+        res.sendFile(__dirname + "/success.html");
+      } else {
+        res.sendFile(__dirname + "/failure.html");
       }
 
     });
@@ -63,6 +70,10 @@ app.post("/", function(req, res){
 
 //List Id
 //e450ebcd2f
+
+app.post("/failure", function(req, res){
+  res.redirect("/");
+});
 
 app.listen(3000, function(){
   console.log("Server is running on port http://localhost:3000");
