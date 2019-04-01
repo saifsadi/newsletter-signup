@@ -23,9 +23,46 @@ app.post("/", function(req, res){
     console.log(firstName);
     console.log(lastName);
     console.log(email);
-    
+
+    var data = {
+      members : [
+        {
+        email_address : email,
+        status : 'subscribed',
+        merge_fields : {
+            FNAME : firstName,
+            LNAME : lastName
+          }
+      }
+      ]
+    };
+    var jsonData = JSON.stringify(data);
+
+    var options = {
+      url:'https://us13.api.mailchimp.com/3.0/lists/e450ebcd2f',
+      method : 'POST',
+      headers : {
+        'Authorization' : 'saifsadi b5167b26b79cd1173d23e3935116fc47-us13'
+      },
+      body : jsonData
+    };
+
+    request(options, function(err, response, body){
+      if(err){
+        console.log(err);
+      } else {
+        console.log(response.statusCode);
+      }
+
+    });
+
 });
 
+//API Key
+//b5167b26b79cd1173d23e3935116fc47-us13
+
+//List Id
+//e450ebcd2f
 
 app.listen(3000, function(){
   console.log("Server is running on port http://localhost:3000");
